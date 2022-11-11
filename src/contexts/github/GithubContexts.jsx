@@ -3,7 +3,6 @@ import githubReducer from "./GithubReducer";
 
 const GithubContexts = createContext();
 const GITHUB_URL = process.env.REACT_APP_GITHUB_URL;
-const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN;
 
 export const GithubProvider = ({ children }) => {
 	const initialState = {
@@ -31,11 +30,7 @@ export const GithubProvider = ({ children }) => {
 		const setLoading = () => dispatch({ type: "SET_LOADING" });
 		setLoading();
 
-		const response = await fetch(`${GITHUB_URL}/users/${login}`, {
-			headers: {
-				Authorization: `token ${GITHUB_TOKEN}`,
-			},
-		});
+		const response = await fetch(`${GITHUB_URL}/users/${login}`, {});
 
 		if (response.status === 404) {
 			window.location = "/notfound";
@@ -54,11 +49,7 @@ export const GithubProvider = ({ children }) => {
 
 		const params = new URLSearchParams({ sort: "created", per_page: 10 });
 
-		const response = await fetch(`${GITHUB_URL}/users/${login}/repos?${params}`, {
-			headers: {
-				Authorization: `token ${GITHUB_TOKEN}`,
-			},
-		});
+		const response = await fetch(`${GITHUB_URL}/users/${login}/repos?${params}`, {});
 		const data = await response.json();
 
 		dispatch({
