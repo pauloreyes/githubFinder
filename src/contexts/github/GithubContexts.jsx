@@ -27,25 +27,6 @@ export const GithubProvider = ({ children }) => {
 
 	const [state, dispatch] = useReducer(githubReducer, initialState);
 
-	async function searchUsers(text) {
-		const setLoading = () => dispatch({ type: "SET_LOADING" });
-		setLoading();
-
-		const params = new URLSearchParams({ q: text });
-
-		const response = await fetch(`${GITHUB_URL}/search/users?${params}`, {
-			headers: {
-				Authorization: `token ${GITHUB_TOKEN}`,
-			},
-		});
-		const { items } = await response.json();
-
-		dispatch({
-			type: "GET_USERS",
-			payload: items,
-		});
-	}
-
 	async function getUser(login) {
 		const setLoading = () => dispatch({ type: "SET_LOADING" });
 		setLoading();
@@ -88,7 +69,7 @@ export const GithubProvider = ({ children }) => {
 
 	const value = {
 		...state,
-		searchUsers,
+		dispatch,
 		clearUsers,
 		getUser,
 		clearUser,
